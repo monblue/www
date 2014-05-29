@@ -14,8 +14,8 @@ language: Korean
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 # url: http://www.moonhani.com
 # root: /
-url: http://www.moonhani.com/hexo
-root: /hexo/
+url: http://www.moonhani.com:4000/blog/
+root: /blog/
 permalink: :year/:month/:day/:title/
 tag_dir: tags
 archive_dir: archives
@@ -82,7 +82,8 @@ disqus_shortname: moonhani
 # Extensions
 ## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
 ## Themes: https://github.com/tommy351/hexo/wiki/Themes
-theme: landscape
+#theme: landscape
+theme: nut
 exclude_generator:
 
 # Deployment

@@ -1,6 +1,7 @@
 title: '서버호스팅 운영 가이드'
 date: 2014-05-26 19:52:41
 tags: 'test'
+categories: 'IT'
 ---
 ## 운영 가이드
 ### 상용 linux 명령어
@@ -10,6 +11,13 @@ tags: 'test'
 ### vi 기초 명령어
 
 * ref: [VI 에디터 사용법](https://wiki.kldp.org/KoreanDoc/html/Vim_Guide-KLDP/Vim_Guide-KLDP.html)
+
+<div class="fluid-width-video-wrapper" style="padding-top: 50%;">
+<iframe src="//www.youtube.com/embed/qYodWEKCuGg" frameborder="0" allowfullscreen="" id="fitvid604561">
+</iframe>
+</div>
+
+<!-- more -->
 1. 실행, 종료
   1) 실행
   ```bash
@@ -21,20 +29,22 @@ tags: 'test'
   - 저장후 종료: `:wq<CR>`
   - 단순 종료: `:q!<CR>`
   3) 명령모드: `<esc>`
-2. 편집
-  1) 입력
-  | type | description  |
-  | ---- |:------------------:|
-  | a | 커서 위치의 다음 칸부터부터 끼워넣기(append) |
-  | A | 커서가 있는 줄의 끝에서부터 끼워넣기 |
-  | i | 커서 위치부터 끼워넣기(insert) |
 
-a 커서 위치의 다음 칸부터부터 끼워넣기(append)
-A 커서가 있는 줄의 끝에서부터 끼워넣기
-i 커서 위치부터 끼워넣기(insert)
-I 커서가 있는 줄의 맨 앞에서부터 끼워넣기
-o 커서 바로 아래에 줄을 만들고 끼워넣기(open line)
-O 커서 바로 위에 줄을 만들고 끼워넣기
+2. 편집
+
+1) 입력
+
+type | description
+--- | ---
+*a* | 커서 위치의 다음 칸부터부터 끼워넣기(append)
+`A` | 커서가 있는 줄의 끝에서부터 끼워넣기
+**i** | 커서 위치부터 끼워넣기(insert)
+i | 커서 위치부터 끼워넣기(insert)
+I | 커서가 있는 줄의 맨 앞에서부터 끼워넣기
+o | 커서 바로 아래에 줄을 만들고 끼워넣기(open line)
+O | 커서 바로 위에 줄을 만들고 끼워넣기
+
+
 
 2.
 
@@ -198,3 +208,122 @@ $ gem install jekyll
 nodejs, forever
 $ ps -ef | grep node
 $ kill
+
+
+
+## hexo blog platform
+### themes
+#### Landscape
+
+#### Nut
+* [nut:git](https://github.com/seff/nut)
+* [nut:demo](http://nutinn.com/)
+
+##### Installation
+
+1. Install
+```bash
+$  cd /home/git/www/hexo
+$ git clone https://github.com/seff/nut.git themes/nut
+```
+
+```bash
+npm install lodash --save
+npm install marked --save
+```
+2. setting
+  1) Modify theme setting in `/_config.yml` to nut.
+  2) Modify `thems/nut/_config.yml`
+    (1) menu:
+    (2)
+
+3. Update
+```bash
+cd themes/nut
+git pull
+```
+Configuration
+
+Most of the configurations are the same with Landscape, but the following.
+
+pages:
+- about
+- wiki
+
+wiki_dir: wiki
+wiki_info:
+
+home_widgets:
+- search
+- category
+- tag
+- archive
+- blogroll
+act_widgets:
+- search
+- recent_posts
+- blogroll
+post_widgets:
+- nav
+- post_date
+- post_category
+- post_tag
+
+links:
+- name: My Github
+  url: https://github.com/
+  logo: github
+pages - Pages that will appear on navigation bar, you must create it first.
+wiki_dir - Wiki directory name which locates in the source directory, the root directory of wiki should not create any file, the index file is generated automatically.
+wiki_info - Description of your wiki.
+home_widgets - Widgets displaying in the home page.
+act_widgets - Widgets displaying in the archives page, categories page and tags page.
+post_widgets - Widgets displaying in the post page.
+links - Links displaying in the blogroll widget.
+name - The name of the link.
+url - The url of the link.
+logo - The logo of the link, which should place the last words of the Font Awesome style, for example, you should assign github here for the github page link whose Font Awesome style is fa fa-github.
+
+
+
+
+
+=====================================
+## 댓글
+### disqus
+
+- _config.yml 의 disqus 항목은 변경 필없음?
+- hexo/theme/layout/_partial/post/head.ejs 에 자바스크립트 embed 삽입
+- hexo/theme/layout/_partial/post/after-footer.ejs 를 변경하면 LiveRe를 넣을 수 있을 것 같음
+
+### LiveRe
+
+LiveRe
+
+* twitter
+- 이름: moonhani
+- 이메일: monwater@hotmail.com
+- 아이디: moonjsam
+
+* LiveRe
+- 코드이름: moonhani
+- 사이트 URL : www.moonhani.com
+- 코드 :
+<!-- 1. 아래 스크립트는 페이지의 <head></head> 영역에 삽입하시기 바랍니다. -->
+<script type="text/javascript" src="//101.livere.co.kr/js/livere8_lib.js" charset="utf-8"></script>
+
+<!-- 2. 아래 코드는 라이브리를 설치하시고자 하는 위치에 삽입하시기 바랍니다. -->
+<div id="livereContainer">
+	<script type="text/javascript">
+		var consumer_seq 	= "200";
+		var livere_seq 		= "20173";
+		var smartlogin_seq 	= "228";
+
+		var title = 해당 게시물 제목
+		var refer = http://를 제외한 해당 페이지 URL ( ex : www.moonhani.com/글번호 )
+
+		livereReply = new Livere( livere_seq , refer , title );
+		livereLib.start();
+	</script>
+</div>
+

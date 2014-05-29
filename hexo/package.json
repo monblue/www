@@ -6,6 +6,8 @@
     "hexo": "^2.6.0",
     "hexo-renderer-ejs": "*",
     "hexo-renderer-marked": "*",
-    "hexo-renderer-stylus": "*"
+    "hexo-renderer-stylus": "*",
+    "lodash": "^2.4.1",
+    "marked": "^0.3.2"
   }
 }
