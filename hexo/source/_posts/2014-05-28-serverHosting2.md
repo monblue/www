@@ -327,3 +327,8 @@ LiveRe
 	</script>
 </div>
 
+========================================
+git 저장소 추가
+
+D:\dev\moonHani\www
+$ git remote add mb https://github.com/monblue/www.git
