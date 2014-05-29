@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book management</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../_assets/css/bootstrap.css" />
+  <style>
+    .unit {display:block;background-color:#eee;font-size:17pt;font-weight:bold;border:thin solid #aaa;padding:5px 5px;}
+    .h1 {font-size:15pt;}
+    .title {font-weight:bold;}
+    .original {display:block;font-size:14pt;margin-top:14px;background-color:#FFD8BB;border:1px solid #FFB780;border-left:5px solid #FFB780;padding:3px;}
+    .translate {display:block;font-size:12pt;margin-top:5px;background-color:#E7F1FE;border:1px solid #7DA2CE;border-left:5px solid #7DA2CE;padding:3px;}
+    ._o {display:block;font-size:14pt;margin-top:14px;background-color:#FFD8BB;border:1px solid #FFB780;border-left:5px solid #FFB780;padding:3px;}
+    ._t {display:block;font-size:12pt;margin-top:5px;background-color:#E7F1FE;border:1px solid #7DA2CE;border-left:5px solid #7DA2CE;padding:3px;}
+    _.page {display:none;}
+    _sup {display:inline;color:#0a0;}
+    sup {color:#0a0;}
+    _.note {display:none;}
+    .note {display:none;font-size:10pt;color:#f00;}
+    .note.view {display:inline;font-size:10pt;color:#f00;}
+    .open ~ span:not(.note) {display:inline;}
+    .closed ~ span:not(.note) {display:none;}
+    .searched {color:#f00;font-weight:bold;}
+
+  </style>
+</head>
+
+<body>
+<span>
+<select id="bookName">
+  <option mH-db="bookdb" mH-coll="donggam">동의보감</option>
+  <option mH-db="bookdb" mH-coll="bangyak1">방약합편1</option>
+  <option mH-db="bookdb" mH-coll="bangyak2">방약합편2</option>
+  <option mH-db="bookdb" mH-coll="bangyak3">방약합편3</option>
+  <option mH-db="bookdb" mH-coll="bangyak4">방약합편4</option>
+</select>
+<select>
+  <!--<option mH-key="_t:t">제목</option>-->
+  <option mH-key="_o">원문</option>
+  <option mH-key="_t">해석</option>
+  <option mH-key="n">주석</option>
+</select>
+<input id="txtSearch" type="text" style="width:100px">
+<button id="js-search" class="btn btn-default">검색</button>
+</span>
+<!--
+<span>
+<button id="js-prevPage">〈</button>
+<input id="txtPage" type="text" style="width:60px"/>
+<button id="js-nextPage">〉</button>
+<button id="js-goPage" class="btn btn-default">페이지</button>
+<button id="js-savePage" class="btn btn-default">페이지저장</button>
+<label>(원)</label><input id="txtPattern" type="text"/>
+<label>(변)</label><input id="txtReplace" type="text"/>
+<button id="js-replaceAll" class="btn btn-default">변환</button>
+<label for="isRegex">정규식</label><input id="isRegex" type="checkbox" value="1">
+</span>
+-->
+<div id="searchRs">
+</div>
+<!--
+<div id="bookEdit">
+<div id="pageImage" class="col-md-6">
+<img src="/photo/book/donggam/0001.jpg" width="800">
+
+</div>
+<textarea id="pageText" class="col-md-6" rows="60">
+pageText
+</textarea>
+</div>
+-->
+
+<script src="../_assets/js/_lib/MH_func.js"></script>
+<script src="../_assets/js/_lib/jquery.js"></script>
+<script src="../_assets/js/_lib/underscore.js"></script>
+<script src="../_assets/js/_lib/backbone.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#js-search').on('click', function(){
+      console.log('clicked search');
+      var data = {"keyword":$('#txtSearch').val()};
+      $.ajax({
+        url: 'http://www.moonhani.com:3333/search',
+        //async: false,
+        type: 'GET',
+        dataType: 'json',
+        data: data,
+        success: function(res) {
+          console.log('res!!!!!!!!', res);
+          var html = '';
+          _.each(res, function(item){
+            html += '<li><a class="viewDetail" id="' + item.id + '">' + item.tt + '</a></li>'
+          });
+          $html = $(html);
+          //$('#bookEdit').hide();
+          $('#searchRs').empty();
+          $('#searchRs').append($html);
+          //$('#rs').html(html);
+
+          viewDetail();
+/*
+          $('.viewDetail').on('click', function(){
+            console.log('viewDetail', $(this).attr('id'));
+          });
+*/
+        }
+      });
+    });
+
+/*
+    $('#js-goPage').on('click', function(){
+      var book = $('#bookName option:selected').attr('mH-coll');
+      var page = $('#txtPage').val();
+      $('#searchRs').empty();
+      viewPage(book, page);
+      $('#bookEdit').show();
+      console.log('goPage', book, page);
+    });
+
+
+    $('#js-prevPage').on('click', function(){
+      var book = $('#bookName option:selected').attr('mH-coll');
+      var page = parseInt($('#txtPage').val()) - 1;
+      $('#txtPage').val(page);
+      $('#searchRs').empty();
+      viewPage(book, page);
+      $('#bookEdit').show();
+      console.log('prevPage', book, page);
+    });
+
+    $('#js-nextPage').on('click', function(){
+      var book = $('#bookName option:selected').attr('mH-coll');
+      var page = parseInt($('#txtPage').val()) + 1;
+      $('#txtPage').val(page);
+      $('#searchRs').empty();
+      viewPage(book, page);
+      $('#bookEdit').show();
+      console.log('nextPage', book, page);
+    });
+
+    $('#js-savePage').on('click', function(){
+      var book = $('#bookName option:selected').attr('mH-coll');
+      var page = $('#txtPage').val();
+      console.log('savePage', book, page);
+      //fetchTitles(page);
+      savePage(book, page);
+
+    });
+
+    $('#js-replaceAll').on('click', function(){
+      var book = $('#bookName option:selected').attr('mH-coll');
+      //var page = $('#txtPage').val();
+      console.log('replaceWords', book);
+      //fetchTitles(page);
+      replaceWords(book);
+
+    });
+*/
+    function viewDetail() {
+      $('.viewDetail').on('click', function(){
+        _viewDetail($(this).attr('id'));
+      });
+    }
+
+    function _viewDetail(id) {
+        console.log('viewDetail', id);
+        //var self = this;
+        var self = $('#' + id);
+        if (!$('#' + id)) {
+          self = $('#pageViewItem'); //@@@@@@@@@@@@@@
+        }
+
+        $.ajax({
+          url: 'http://www.moonhani.com:3333/books/' + id,
+          //async: false,
+          type: 'GET',
+          dataType: 'json',
+          //data: data,
+          success: function(res) {
+            console.log('res!!!!!!!!', res);
+            $('.rsContent').remove();
+
+            var html = '';
+            var htmlId = '';
+            var htmlTitle = '';
+            var htmlContent = '';
+            for (i in res) {
+            	if (i == '_id') {
+								htmlId += '<li class="rsContent" id="' + res[i] + '">';
+            	} else if (i.substring(0,1) == 'h') {
+            		htmlTitle += ' > ' + res[i];
+								//제목 내용 생성
+            	} else {
+								htmlContent += '<div>' + renderContent(res[i], i) + '</div>';
+            	}
+            	//제목 변경
+            }
+            htmlTitle = htmlTitle.replace(' > ', '');  //첫번째 > 없애기
+            htmlTitle = '<div class="unit">' + htmlTitle + '</div>';
+            html = htmlId + htmlTitle + htmlContent + '</li>';
+/*
+
+            var html = '<li class="rsContent" id="' + res._id + '">';
+            html += '<div class="chapter">' + res.h1 + '>' + res.h2 + '>' + res.h3 + '</div>';
+            //html += '<div>' + JSON.stringify(res._o) + '</div>';
+            //html += '<div>' + JSON.stringify(res._t) + '</div>';
+            html += '<div>' + renderContent(res._o, 'original') + '</div>';
+            html += '<div>' + renderContent(res._t, 'translate') + '</div>';
+            html += '</li>';
+*/
+            $html = $(html);
+            //console.log('html', html);
+            console.log('renderContent(res._o)', res._o, renderContent(res._o));
+            $(self).parent().after($html);
+
+            //handler
+            $(".h1, .title").on("click", function(){
+              //alert("clicked....")
+
+              if($(this).hasClass('closed')) {
+                $(this).addClass('open').removeClass('closed');
+                $(this).parent().find('sup').removeClass('hide');
+                console.log('find sup', $(this).find('sup'));
+              } else {
+                $(this).addClass('closed').removeClass('open');
+                $(this).parent().find('sup').addClass('hide');
+              }
+
+            });
+
+            $("sup").on("click", function(){
+              if($(this).next().hasClass('view')) {
+                $(this).next().removeClass("view");
+              } else {
+                $(this).next().addClass("view");
+              }
+            });
+          }
+        });
+    }
+
+
+//
+    function renderContent(item, className) {
+      var fragments = ['<div class="' + className + '">'];
+      var noteNum = 1;
+      var txtSearch = $('#txtSearch').val();
+      var txtSearchReg = new RegExp(txtSearch, 'g');	//모두 바꾸기용
+
+      $.each(item, function(key, val) {
+        if((typeof(val) == 'object')){
+          if (val.t) {
+            console.log('val.t', val.t);
+            fragments.push('<span class="title">' + val.t + '</span>'); //
+          }
+          if (val.n) {
+            fragments.push('<sup>&lt;' + noteNum + '&gt;</sup><span class="note">' + val.n + '</span>'); //
+            noteNum++;
+          }
+        } else {  // catch strings, add double quotes
+          fragments.push('<span>' + val + '</span>');
+        }
+      });
+      console.log('fragments.join()', fragments.join(''));
+      return fragments.join('').replace(/\#(\d\d\d\d)/g, '</span><span class="page" id="p$1"></span><span>').replace(txtSearchReg, '</span><span class="searched">' + txtSearch + '</span><span>').replace(/◎/gi, '<br>◎').replace(/○/gi, '<br>○'); + '</div>';
+    }
+/*
+    function viewPage(book, page) {
+
+      var path = '/photo/book/' + book + '/';
+      var imgName = path + hM_putZeros(page, 3) + '.jpg';
+      if (book == 'donggam') {
+        imgName = path + hM_putZeros(page, 4) + '.jpg';
+      }
+      $('#pageImage').find('img').attr('src', imgName);
+      $('#pageText').val(fetchPageContents(book, page));
+      console.log('viewPage(book, page)', book, page);
+
+      var titles = fetchTitles(page);	//@@@@@@@@@@@@@@@@@
+      v//ar titles = ["◇정성(鄭聲)", "◇말소리가 미약한 것(言微)", "◇고함소리(呼)", "◇웃음소리(笑)"];
+      console.log('viewPage res titles', titles);
+      var data = {"titles":titles};
+      $.ajax({
+          url: 'http://www.moonhani.com:3333/findByTitle',
+          async: false,
+          type: 'POST',
+          dataType: 'json',
+          data: data,
+          success: function(res) {
+            console.log('viewPage res!!!!!!!!', res);
+            //$('.rsContent').remove();
+          }
+      });
+
+      console.log('viewPage res titles222');
+
+
+    }
+
+    function savePage(book, page) {
+      var data = $('#pageText').val();
+      $.ajax({
+        url: 'http://192.168.0.11/mH/API/book/savePage/' + book + '/' + page,
+        async: false,
+        type: 'POST',
+        //dataType: 'json',
+        data: data,
+        success: function(res) {
+          //console.log('res!!!!!!!!', res);
+          //rs = res;
+        }
+      });
+    }
+
+    function replaceWords(book) {
+      var pattern = $('#txtPattern').val();
+      var replace = $('#txtReplace').val();
+      if ($('#isRegex').val()) {
+        pattern = '/' + pattern + '/';
+        replace = '/' + replace + '/';
+      }
+      var data = {"pattern":pattern, "replace":replace};
+      $.ajax({
+        url: 'http://192.168.0.11/mH/API/book/replaceWords/' + book,
+        async: false,
+        type: 'POST',
+        //dataType: 'json',
+        data: data,
+        success: function(res) {
+          //console.log('res!!!!!!!!', res);
+          //rs = res;
+        }
+      });
+
+    }
+
+    function fetchPageContents(book, page) {
+      var rs;
+      $.ajax({
+        url: 'http://192.168.0.11/mH/API/book/fetchPageContents/' + book + '/' + page,
+        async: false,
+        type: 'GET',
+        //dataType: 'json',
+        //data: data,
+        success: function(res) {
+          //console.log('res!!!!!!!!', res);
+          rs = res;
+        }
+      });
+      return rs;
+    }
+
+    function fetchTitles(page) {
+      var rs;
+      $.ajax({
+        url: 'http://192.168.0.11/mH/API/book/fetchTitles/' + page,
+        async: false,
+        type: 'GET',
+        dataType: 'json',
+        //data: data,
+        success: function(res) {
+          //console.log('res!!!!!!!!', res);
+          rs = res;
+        }
+      });
+      return rs;
+    }
+*/
+  });
+
+</script>
+</body>
+</html>
