@@ -12,10 +12,12 @@ language: Korean
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-# url: http://www.moonhani.com
-# root: /
-url: http://www.moonhani.com:4000/blog/
-root: /blog/
+#url: http://www.moonhani.com:4000
+#root: /
+#url: http://www.moonhani.com:4000/blog
+#root: /blog/
+url: http://blog.moonhani.com/
+root: /
 permalink: :year/:month/:day/:title/
 tag_dir: tags
 archive_dir: archives
@@ -61,6 +63,7 @@ tag: 2
 ## http://www.senchalabs.org/connect/logger.html
 port: 4000
 server_ip: 0.0.0.0
+#server_ip: 127.0.0.1
 logger: false
 logger_format:
 

@@ -1,13 +1,13 @@
 # Header
 menu:
 - name: Archives
-  path: /blog/archives
+  path: /archives
   logo: archive
 - name: Categories
-  path: /blog/categories
+  path: /categories
   logo: folder
 - name: Tags
-  path: /blog/tags
+  path: /tags
   logo: tags
 - name: Wiki
   path: /wiki

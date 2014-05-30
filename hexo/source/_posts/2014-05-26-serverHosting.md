@@ -90,3 +90,37 @@ $ sudo npm install -g mongodb
 $ npm install forever -g
 $ forever start /var/www/testServer.js
 $ forever list
+
+
+
+
+## subdomain
+### /etc/hosts
+
+
+### node-http-proxy
+#### install
+```bash
+$ sudo npm install -g http-proxy
+```
+
+* home/git/www/node/proxyServer5.js
+
+```bash
+var httpProxy = require('http-proxy')
+
+var proxy = httpProxy.createProxy();
+
+var options = {
+  //'blog.moonhani.com': 'http://127.0.0.1:4000',  // 'http://'가 없으면 error 발생@@@@
+  'blog.moonhani.com': 'http://0.0.0.0:4000',
+  'blog.moonhani.com': 'http://127.0.0.1:4000',
+  'www.moonhani.com': 'http://127.0.0.1:4343'
+}
+
+require('http').createServer(function(req, res) {
+  proxy.web(req, res, {
+    target: options[req.headers.host]
+  });
+}).listen(80);
+```

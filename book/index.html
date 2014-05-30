@@ -82,7 +82,7 @@ pageText
       console.log('clicked search');
       var data = {"keyword":$('#txtSearch').val()};
       $.ajax({
-        url: 'http://www.moonhani.com:3333/search',
+        url: 'http://www.moonhani.com:4343/search',
         //async: false,
         type: 'GET',
         dataType: 'json',
@@ -173,7 +173,7 @@ pageText
         }
 
         $.ajax({
-          url: 'http://www.moonhani.com:3333/books/' + id,
+          url: 'http://www.moonhani.com:4343/books/' + id,
           //async: false,
           type: 'GET',
           dataType: 'json',
@@ -283,7 +283,7 @@ pageText
       console.log('viewPage res titles', titles);
       var data = {"titles":titles};
       $.ajax({
-          url: 'http://www.moonhani.com:3333/findByTitle',
+          url: 'http://www.moonhani.com:4343/findByTitle',
           async: false,
           type: 'POST',
           dataType: 'json',
