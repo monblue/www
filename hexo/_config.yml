@@ -86,7 +86,7 @@ disqus_shortname: moonhani
 ## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
 ## Themes: https://github.com/tommy351/hexo/wiki/Themes
 #theme: landscape
-theme: nut
+theme: mHblog01
 exclude_generator:
 
 # Deployment

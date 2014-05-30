@@ -294,7 +294,10 @@ logo - The logo of the link, which should place the last words of the Font Aweso
 
 - _config.yml 의 disqus 항목은 변경 필없음?
 - hexo/theme/layout/_partial/post/head.ejs 에 자바스크립트 embed 삽입
-- hexo/theme/layout/_partial/post/after-footer.ejs 를 변경하면 LiveRe를 넣을 수 있을 것 같음
+- hexo/theme/layout/_partial/post/after-footer.ejs 를 변경하면 LiveRe를 넣을 수 있을 것 같음@@@@@@@(안됨)
+- hexo/theme/layout/_partial/post/article.ejs 에 코드 추가@@@
+(<section id="comments"> 코드 </section>)
+
 
 ### LiveRe
 
@@ -309,23 +312,50 @@ LiveRe
 - 코드이름: moonhani
 - 사이트 URL : www.moonhani.com
 - 코드 :
-<!-- 1. 아래 스크립트는 페이지의 <head></head> 영역에 삽입하시기 바랍니다. -->
-<script type="text/javascript" src="//101.livere.co.kr/js/livere8_lib.js" charset="utf-8"></script>
 
-<!-- 2. 아래 코드는 라이브리를 설치하시고자 하는 위치에 삽입하시기 바랍니다. -->
-<div id="livereContainer">
-	<script type="text/javascript">
-		var consumer_seq 	= "200";
-		var livere_seq 		= "20173";
-		var smartlogin_seq 	= "228";
 
-		var title = 해당 게시물 제목
-		var refer = http://를 제외한 해당 페이지 URL ( ex : www.moonhani.com/글번호 )
+* livere 관리 계정 신청
+- http://insight.livere.com/request/
+- moonhani / *j****5
+=======================================
+## 블로그내 검색
+* ref: [구글 블로그 검색 이용 Egloos](http://fendee.egloos.com/11033187)
 
-		livereReply = new Livere( livere_seq , refer , title );
-		livereLib.start();
-	</script>
-</div>
+```html
+<span style="font-weight:bold;color:#6BB535;">▷검색어</span><br>
+<input type="text" id="gblogsrch" name="gblogsrch" value="" style="width:170px"><br>
+<div style="font-size:1pt;height:3px;"></div>
+<button style="color:#5365CA;font-weight:bold;" onClick="javascript:if(gblogsrch.value==''){alert('검색어를 입력하세요');return;};window.open(ggblogurl.value+'내블로그주소'+'+'+gblogsrch.value);" target="_blank">구글검색</button>
+
+<input type="hidden" value="http://www.google.co.kr/search?newwindow=1&noj=1&output=search&tbm=blg&sclient=psy-ab&q=blogurl%3Ahttp%3A%2F%2F" id="ggblogurl" name="ggblogurl">
+```
+
+
+http://www.google.co.kr/search?newwindow=1&noj=1&output=search&tbm=blg&sclient=psy-ab&q=blogurl%3Ahttp%3A%2F%2F
+
+http://www.google.co.kr/search?newwindow=1&noj=1&output=search&tbm=blg&sclient=psy-ab&q=blogurl%3Ahttp%3A%2F%2Fblog.moonhani.com+호스팅
+
+--------------------------------------
+* [hexo api](http://hexo.io/api/warehouse/classes/Database.html)
+
+--------------------------------------
+/home/git/www/hexo/db.json 에서 검색
+underscore 이용
+
+--------------------------------------
+* [swiftype 검색 엔진](https://swiftype.com/engines/api)
+
+
+
+--------------------------------------
+P.S. (2013.06.28 수정사항)
+주소입력박스를 없앤 경우, 주소입력박스의 값을 체크하는 if 조건문 삭제
+검색버튼이 IE9에서 검색어 입력박스 하단에 붙어 렌더링 되는 문제를 해결하기 위해 div 태그를 이용해 3px 벌려줌
+
+빨간색으로 '내블로그주소' 라고 되어 있는 부분에 http:// 를 제외한 내 블로그의 주소를 넣습니다.
+예) fendee.egloos.com
+출처:(이글루스) 내 블로그 검색 위젯 만들기 - 구글 블로그 검색 이용
+
 
 ========================================
 git 저장소 추가
