@@ -356,9 +356,98 @@ P.S. (2013.06.28 수정사항)
 예) fendee.egloos.com
 출처:(이글루스) 내 블로그 검색 위젯 만들기 - 구글 블로그 검색 이용
 
+=========================================
+## blog platform ghost
+[ghost](http://docs.ghost.org/)
+
+
+###
+[설치](http://docs.ghost.org/installation/linux/)
+
+```bash
+$ cd /home/git/www
+$ curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip
+
+//(unzip이 설치되어 있지 않은 경우)
+$ cd ~
+$ sudo apt-get install -g unzip
+$ cd /home/git/www
+
+$ unzip -uo ghost.zip -d ghost
+$ cd ghost
+$ npm install --production
+
+$ npm start
+($ forever start index.js) // forever
+```
+
+
+* test
+- http://www.moonhani.com:2368/	   //실패
+
+#### config.js 수정
+- 127.0.0.1   --> 0.0.0.0
+- url: http://my-ghost-blog.com --> http://www.moonhani.com
+
+#### admin setting
+- http://www.moonhani.com:2368/ghost/signup/
+- moonhani
+- monwater@gmail.com
+- m****1**
+- http://www.moonhani.com:2368/ghost/
+
+#### blog export(bakcup), import
+- http://www.moonhani.com:2368/ghost/debug/
+
+#### theme install
+```bash
+$ cd /home/git/www/ghost/content/themes
+$ git clone https://github.com/oswaldoacauan/ghostium/ "ghostium"
+```
+
+#### theme setting
+* [theme setting](http://www.moonhani.com:2368/ghost/settings/general/)
+- theme: Ghostium-2.2.1 변경
+- image files(blog.cover, blog.logo) 복사
+
+### theme 추가
+```bash
+$ cd /home/git/www/ghost/content/themes
+$ git clone https://github.com/mholland1337/Peeves/ "Peeves"
+```
+
+
+
+
+####
+* error : Error: "There is no user with that email address." and "A user is already registered. Only one user for now!"
+- https://ghost.org/forum/installation/2397-error-there-is-no-user-with-that-email-address-and-a-user-is-already-registered-only-one-user-for-now/
+
+ghost\data\ghost-dev.db 삭제
+
+```bash
+$ forever stop index.js
+$ forever start index.js
+```
 
 ========================================
 git 저장소 추가
 
 D:\dev\moonHani\www
 $ git remote add mb https://github.com/monblue/www.git
+
+
+========================================
+###directory structure
+
+assets
+public
+member
+admin
+blog(ghost)
+routes(api)
+node_modules
+
+
+
+

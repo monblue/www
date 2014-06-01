@@ -55,6 +55,7 @@ export NODE_PATH=/usr/lib/node_modules:$NODE_PATH
 # npm install -g socket.io
 # sudo npm install -g express@3.8.0 //(express 4.* 는 middleware가 삭제되어 테스트에 부적합)
 # sudo npm install -g express@3.8.0
+# sudo npm install -g jade	//template engine
 ```
 
 #### git
@@ -86,6 +87,27 @@ $ sudo /etc/init.d/mongod restart
 $ sudo npm install -g mongodb
 ```
 
+### mongoose
+```bash
+$ sudo npm install -g mongoose
+```
+
+### connect
+```bash
+$ sudo npm install -g connect
+```
+
+### cookie
+```bash
+$ sudo npm install -g cookie
+```
+
+### nodemailer
+```bash
+$ sudo npm install -g nodemailer  //npm install nodemailer --save
+```
+
+
 #### npm forever
 $ npm install forever -g
 $ forever start /var/www/testServer.js
@@ -96,7 +118,20 @@ $ forever list
 
 ## subdomain
 ### /etc/hosts
+```
+127.0.0.1       localhost
+127.0.0.1       blog.moonhani.com
+127.0.0.1       book.moonhani.com
+127.0.0.1       www.moonhani.com
 
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+```
 
 ### node-http-proxy
 #### install

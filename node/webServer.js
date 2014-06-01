@@ -6,6 +6,8 @@ var path = require('path');
 var http = require('http');
 var book = require('./routes/books');
 
+var user = require('./routes/users');		//login, signup, cookie...
+
 var app = express();
 
 app.configure(function () {
@@ -45,7 +47,7 @@ app.get('/blog/', function(req, res) {
   res.redirect('http://www.moonhani.com:4000/');
 });
 
-//bookServer
+//book api router
 app.get('/books', book.findAll);
 app.get('/books/:id', book.findById);
 app.post('/books', book.addbook);
@@ -54,6 +56,18 @@ app.delete('/books/:id', book.deletebook);
 
 app.get('/search', book.findByQuery);
 app.post('/findByTitle', book.findByTitle);
+
+
+
+//userServer
+app.get('/users', user.findAll);
+app.get('/users/:id', user.findById);
+app.post('/users', user.adduser);
+app.put('/users/:id', user.updateuser);
+app.delete('/users/:id', user.deleteuser);
+
+//app.get('/search', user.findByQuery);
+//app.post('/findByTitle', user.findByTitle);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
