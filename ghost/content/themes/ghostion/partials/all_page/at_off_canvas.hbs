@@ -1,11 +1,93 @@
+<!--
 <div class="left-off-canvas-menu">
 	<ul class="off-canvas-list">
 		<li><label>Main Menu</label></li>
 		<li><a class="at_menu_item" href="{{@blog.url}}"><span class="fa fa-home"></span> Home</a></li>
 		<li><a class="at_menu_item" href="{{@blog.url}}/about"><span class="fa fa-bar-chart-o"></span> About</a></li>
 		<li><a class="at_menu_item" href="{{@blog.url}}/typography"><span class="fa fa-file-text"></span> Typography</a></li>
+		<li><a class="at_menu_item"><span class="fa fa-file-text"></span>Category</a>
+				<ul>
+				<li><a class="at_menu_item" href="{{@blog.url}}/tag/test"><span class="fa fa-file-text"></span>test</a></li>
+				<li><a class="at_menu_item" href="{{@blog.url}}/tag/건강정보"><span class="fa fa-file-text"></span>건강정보</a></li>
+				<li><a class="at_menu_item" href="{{@blog.url}}/tag/한의원정보"><span class="fa fa-file-text"></li>
+				</ul>
+		</li>
+
 		<li><a class="at_menu_item" href="{{@blog.url}}/documentation"><span class="fa fa-book"></span> Documentation</a></li>
 		<li><a class="at_menu_item" href="{{@blog.url}}/faq"><span class="fa fa-question-circle"></span> FAQ</a></li>
-		<li><a class="at_menu_item" href="https://github.com/axiantheme/ghostion/archive/master.zip"><span class="fa fa-cloud-download"></span> Download</a></li>
 	</ul>
 </div>
+-->
+<style>
+#accordian ul {
+  list-style-type: none;
+}
+</style>
+<div class="left-off-canvas-menu" id="accordian">
+	<ul class="off-canvas-list">
+		<li><label>Main Menu</label></li>
+		<li>
+			<h5><span class="icon-dashboard"></span>Dashboard</h5>
+			<ul>
+				<li><a href="#">Reports</a></li>
+				<li><a href="#">Search</a></li>
+				<li><a href="#">Graphs</a></li>
+				<li><a href="#">Settings</a></li>
+			</ul>
+		</li>
+		<!-- we will keep this LI open by default -->
+		<li class="active">
+			<h5><span class="icon-tasks"></span>Tasks</h5>
+			<ul>
+				<li><a href="#">Today's tasks</a></li>
+				<li><a href="#">Urgent</a></li>
+				<li><a href="#">Overdues</a></li>
+				<li><a href="#">Recurring</a></li>
+				<li><a href="#">Settings</a></li>
+			</ul>
+		</li>
+		<li>
+			<h5><span class="icon-calendar"></span>Calendar</h5>
+			<ul>
+				<li><a href="#">Current Month</a></li>
+				<li><a href="#">Current Week</a></li>
+				<li><a href="#">Previous Month</a></li>
+				<li><a href="#">Previous Week</a></li>
+				<li><a href="#">Next Month</a></li>
+				<li><a href="#">Next Week</a></li>
+				<li><a href="#">Team Calendar</a></li>
+				<li><a href="#">Private Calendar</a></li>
+				<li><a href="#">Settings</a></li>
+			</ul>
+		</li>
+		<li>
+			<h5><span class="icon-heart"></span>Favourites</h5>
+			<ul>
+				<li><a href="#">Global favs</a></li>
+				<li><a href="#">My favs</a></li>
+				<li><a href="#">Team favs</a></li>
+				<li><a href="#">Settings</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+<!-- prefix free to deal with vendor prefixes -->
+<script src="http://thecodeplayer.com/uploads/js/prefixfree-1.0.7.js" type="text/javascript" type="text/javascript"></script>
+
+<!-- jQuery -->
+<script src="http://thecodeplayer.com/uploads/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script>
+/*jQuery time*/
+$(document).ready(function(){
+	$("#accordian h5").click(function(){
+		//slide up all the link lists
+		$("#accordian ul ul").slideUp();
+		//slide down the link list below the h5 clicked - only if its closed
+		if(!$(this).next().is(":visible"))
+		{
+			$(this).next().slideDown();
+		}
+	})
+})
+</script>

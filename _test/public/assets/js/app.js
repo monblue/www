@@ -10,8 +10,6 @@ require.config({
         //chart: '../chart',
         //list: '../list',
         share: '../_share',
-        //chart_tpl: '../../tpl/chart',
-        //list_tpl: '../../tpl/list',
         share_tpl: '../../tpl/_share',
         UI_tpl: '../../tpl/_UI'
     },
@@ -23,12 +21,7 @@ require.config({
     },
 */
     shim: {
-      /*
-        'backbone.collectionsubset': {
-            deps: ['underscore', 'jquery', 'backbone'],
-            exports: 'Subset'
-        },
-        */
+
         'backbone': {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
@@ -40,16 +33,17 @@ require.config({
             deps: ['jquery'],
             //exports: 'Backbone'
         },
-        /*
-        'bootstrap-modal': {
-            deps: ['jquery'],
-            //exports: 'Backbone'
-        },
-        */
+
+        'mlpushmenu': {
+          deps: ['modernizr.custom', 'classie'],
+          exports: 'mlpushmenu'
+        }
+
     }
 });
 
-require(['jquery', 'backbone', 'bootstrap', '../router'], function ($, Backbone, bootstrap, Router) {
+require(['jquery', 'backbone', 'bootstrap', 'modernizr.custom', 'classie', 'mlpushmenu', '../router'], function ($, Backbone, bootstrap, modernizr, classie, mlpushmenu, Router) {
+//require(['jquery', 'backbone', 'bootstrap', '../router'], function ($, Backbone, bootstrap, Router) {
     var app = new Router();
     Backbone.history.start();
 
